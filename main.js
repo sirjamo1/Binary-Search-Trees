@@ -52,44 +52,34 @@ class Tree {
         return root;
     }
     insert(value) {
-        //"insert method half working(not adding to the far right properly";
-        let searchResult = this.search(this.root, value);
-        console.log(searchResult);
-        if (searchResult !== null)
-            return console.log(`${searchResult.data} already exists`);
-        let insertHere = this.hiLowSearch(this.root, value);
-        console.log({ insertHere });
-        let oldLeft = insertHere.left;
-
-        insertHere.left = new Node(value, oldLeft);
+        // look for node to append to
+        let nodeToAppendTo = this.searchForNode(this.root, value);
+        // append new node to left/right depending on values
+        if (nodeToAppendTo.data > value) return nodeToAppendTo.left = new Node(value)
+        if (nodeToAppendTo.data < value) return nodeToAppendTo.right = new Node(value)
     }
-    search(root, key) {
-        if (root === null || root.data === key) return root;
-        // console.log(root, key);
-        if (root.data < key) return this.search(root.right, key);
-        return this.search(root.left, key);
-    }
-    hiLowSearch(root, key) {
+    // search(root, key) {
+    //     if (root === null || root.data === key) return root;
+    //     if (root.data < key) 
+    //     return this.search(root.right, key);
+    //     return this.search(root.left, key);
+    // }
+    searchForNode(root, key) {
         console.log(root, key);
-        if (
-            (root.data > key && root.left < key ) ||
-            (root.data > key && root.left == null)
-        )
-            return root;
-        // console.log(
-        //     `root:${root.data}, left:${root.left.data}, right:${root.right.data}, key:${key}`
-        // );
+        if (root.data === key) return console.log(`${key} already exists`);
+        if (root.data < key && root.right === null || root.data > key && root.left === null) return root;
 
-        if (root.data < key) {
-            return this.hiLowSearch(root.right, key);
-        } else if (root.data > key) {
-            return this.hiLowSearch(root.left, key);
-        }
+        if (root.data > key)
+        // root larger search left
+        return this.searchForNode(root.left, key);
+        // root smaller search right
+        return this.searchForNode(root.right, key);
+        
     }
 }
 
 let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let testNode = new Tree(testArr);
 prettyPrint(testNode.root);
-testNode.insert(6100);
+testNode.insert(6345);
 prettyPrint(testNode.root);
