@@ -61,6 +61,7 @@ class Tree {
             return (nodeToAppendTo.right = new Node(value));
     }
     search(root, key) {
+    
         if (root === null || root.data === key) return root;
         if (root.data < key) return this.search(root.right, key);
         return this.search(root.left, key);
@@ -134,6 +135,11 @@ class Tree {
         if (!root.left?.data) return root;
         return this.searchBottomLeftTree(root.left);
     }
+    find(value) {
+      let nodeFound = this.search(this.root, value)
+      return nodeFound !== null ? nodeFound : `${value} doesn't exist`
+        
+    }
 }
 
 let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
@@ -144,3 +150,4 @@ console.log("after addition");
 prettyPrint(testNode.root);
 testNode.deleteNode(6345);
 prettyPrint(testNode.root);
+console.log(testNode.find(9))
