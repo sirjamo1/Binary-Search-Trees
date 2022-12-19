@@ -61,7 +61,6 @@ class Tree {
             return (nodeToAppendTo.right = new Node(value));
     }
     search(root, key) {
-    
         if (root === null || root.data === key) return root;
         if (root.data < key) return this.search(root.right, key);
         return this.search(root.left, key);
@@ -86,14 +85,10 @@ class Tree {
         //check if it exists
         let nodeToDelete = this.search(this.root, value);
         if (nodeToDelete === null) return console.log("No such value");
-
-        console.log(nodeToDelete);
         // find parent nod
         let parentOfNode = this.searchForParent(this.root, value);
-        console.log(parentOfNode);
         // if node to delete has NO CHILDREN assign it's parent left/right to null
         if (nodeToDelete.left === null && nodeToDelete.right === null) {
-            console.log("here");
             if (parentOfNode.left?.data === value) {
                 return (parentOfNode.left = null);
             }
@@ -136,9 +131,35 @@ class Tree {
         return this.searchBottomLeftTree(root.left);
     }
     find(value) {
-      let nodeFound = this.search(this.root, value)
-      return nodeFound !== null ? nodeFound : `${value} doesn't exist`
-        
+        let nodeFound = this.search(this.root, value);
+        return nodeFound !== null ? nodeFound : `${value} doesn't exist`;
+    }
+    levelOrder() {
+        let root = this.root;
+        //new array
+        const breadthFirstArr = [];
+        if (!root) {
+            return breadthFirstArr;
+        } 
+        //add root to queue
+        const queue = [root];
+        // if queue has length
+        while (queue.length) {
+            // take(remove) first item from queue, assign it to current node 
+            const node = queue.shift();
+            //if node has left (not null) add it to end of queue
+            if (node.left) {
+                queue.push(node.left);
+            }
+            // repeat step for right
+            if (node.right) {
+                queue.push(node.right);
+            } 
+            // add the current node value to the new array
+            breadthFirstArr.push(node.data);
+        }
+        // when finished return array
+        return breadthFirstArr;
     }
 }
 
@@ -149,5 +170,7 @@ testNode.insert(6);
 console.log("after addition");
 prettyPrint(testNode.root);
 testNode.deleteNode(6345);
+console.log("after delete");
 prettyPrint(testNode.root);
-console.log(testNode.find(9))
+//console.log(testNode.find(9));
+console.log(testNode.levelOrder());
