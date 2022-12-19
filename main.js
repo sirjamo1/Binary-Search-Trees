@@ -35,6 +35,10 @@ class Tree {
             0,
             duplicateFreeArr.length - 1
         );
+
+        this.inOrderArray = [];
+        this.preOrderArray = [];
+        this.postOrderArray = [];
         //console.logs the (readable) result
         // prettyPrint(this.root);
     }
@@ -126,7 +130,7 @@ class Tree {
         if (root.data > key) return this.searchForParent(root.left, key);
         return this.searchForParent(root.right, key);
     }
-    searchBottomLeftTree(root) {
+    searchBottomLeftTree(root = this.root) {
         if (!root.left?.data) return root;
         return this.searchBottomLeftTree(root.left);
     }
@@ -140,12 +144,12 @@ class Tree {
         const breadthFirstArr = [];
         if (!root) {
             return breadthFirstArr;
-        } 
+        }
         //add root to queue
         const queue = [root];
         // if queue has length
         while (queue.length) {
-            // take(remove) first item from queue, assign it to current node 
+            // take(remove) first item from queue, assign it to current node
             const node = queue.shift();
             //if node has left (not null) add it to end of queue
             if (node.left) {
@@ -154,12 +158,60 @@ class Tree {
             // repeat step for right
             if (node.right) {
                 queue.push(node.right);
-            } 
+            }
             // add the current node value to the new array
             breadthFirstArr.push(node.data);
         }
         // when finished return array
         return breadthFirstArr;
+    }
+    inOrder(root = this.root) {
+        if (!root) return;
+        //left node has value, run it through 
+        if (root.left) {
+            this.inOrder(root.left);
+        }
+        // push node value to array
+        if (root.data) {
+            this.inOrderArray.push(root.data);
+        }
+        // right node has value, run it through
+        if (root.right) {
+            this.inOrder(root.right);
+        }
+        return this.inOrderArray;
+    }
+    preOrder(root = this.root) {
+        if (!root) return;
+        // push node value to array
+        if (root.data) {
+            this.preOrderArray.push(root.data);
+        }
+        // left node has value, run it through
+        if (root.left) {
+            this.preOrder(root.left);
+        }
+        // right node has value, run it through
+        if (root.right) {
+            this.preOrder(root.right);
+        }
+        return this.preOrderArray;
+    }
+    postOrder(root = this.root) {
+        if (!root) return;
+        // right node has value, run it through
+        if (root.right) {
+            this.postOrder(root.right);
+        }
+        // push node value to array
+        if (root.data) {
+            this.postOrderArray.push(root.data);
+        }
+        // left node has value run it through
+        if (root.left) {
+            this.postOrder(root.left);
+        }
+        return this.postOrderArray;
     }
 }
 
@@ -174,3 +226,6 @@ console.log("after delete");
 prettyPrint(testNode.root);
 //console.log(testNode.find(9));
 console.log(testNode.levelOrder());
+console.log(testNode.inOrder());
+console.log(testNode.preOrder())
+console.log(testNode.postOrder())
