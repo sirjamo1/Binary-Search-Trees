@@ -237,19 +237,27 @@ class Tree {
         return this.minHeight() >= this.height() - 1;
     }
     depth(key) {
-        //total height - node height
-       let totalHeight = this.height()
-       let nodeHeight = this.height(key)
-       if (nodeHeight > totalHeight || key == null) return `${key} not found`
-       return totalHeight - nodeHeight;
-
+        //total height - node height = node depth
+        let totalHeight = this.height();
+        let nodeHeight = this.height(key);
+        if (nodeHeight > totalHeight || key == null) return `${key} not found`;
+        return totalHeight - nodeHeight;
+    }
+    rebalance() {
+        // order tree into ascending array, rebuild tree
+        let orderedArray = this.inOrderArray;
+        return (this.root = this.buildTree(
+            orderedArray,
+            orderedArray[0],
+            orderedArray.length - 1
+        ));
     }
 }
 
 let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
 let testNode = new Tree(testArr);
 prettyPrint(testNode.root);
-//testNode.insert(6);
+testNode.insert(6);
 console.log("after addition");
 prettyPrint(testNode.root);
 testNode.deleteNode(6345);
@@ -263,5 +271,7 @@ console.log(testNode.postOrder());
 console.log(testNode.height(8));
 console.log(testNode.height(4));
 console.log(testNode.minHeight());
-console.log(testNode.isBalanced())
-console.log(testNode.depth(0))
+console.log(testNode.isBalanced());
+console.log(testNode.depth(0));
+testNode.rebalance();
+prettyPrint(testNode.root);
