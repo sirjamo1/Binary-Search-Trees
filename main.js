@@ -167,7 +167,7 @@ class Tree {
     }
     inOrder(root = this.root) {
         if (!root) return;
-        //left node has value, run it through 
+        //left node has value, run it through
         if (root.left) {
             this.inOrder(root.left);
         }
@@ -213,12 +213,43 @@ class Tree {
         }
         return this.postOrderArray;
     }
+    height(input = this.root) {
+        // if input is a number find it's node else use input (node)
+        let node = Number(input) ? this.find(input) : input;
+        // return -1 if null
+        if (node === null) return -1;
+        // rerun left/right
+        const leftHeight = this.height(node.left);
+        const rightHeight = this.height(node.right);
+        // largest of left/right + 1
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+    minHeight(node = this.root) {
+        //finds the row after were all nodes have two children !== null
+        //same as the above, but replace Math.max() with Math.min() to get the smaller of left/right
+        if (node === null) return -1;
+        const leftHeight = this.minHeight(node.left);
+        const rightHeight = this.minHeight(node.right);
+        return Math.min(leftHeight, rightHeight) + 1;
+    }
+    isBalanced() {
+        // the min height is >= then the max height - 1
+        return this.minHeight() >= this.height() - 1;
+    }
+    depth(key) {
+        //total height - node height
+       let totalHeight = this.height()
+       let nodeHeight = this.height(key)
+       if (nodeHeight > totalHeight || key == null) return `${key} not found`
+       return totalHeight - nodeHeight;
+
+    }
 }
 
 let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
 let testNode = new Tree(testArr);
 prettyPrint(testNode.root);
-testNode.insert(6);
+//testNode.insert(6);
 console.log("after addition");
 prettyPrint(testNode.root);
 testNode.deleteNode(6345);
@@ -227,5 +258,10 @@ prettyPrint(testNode.root);
 //console.log(testNode.find(9));
 console.log(testNode.levelOrder());
 console.log(testNode.inOrder());
-console.log(testNode.preOrder())
-console.log(testNode.postOrder())
+console.log(testNode.preOrder());
+console.log(testNode.postOrder());
+console.log(testNode.height(8));
+console.log(testNode.height(4));
+console.log(testNode.minHeight());
+console.log(testNode.isBalanced())
+console.log(testNode.depth(0))
