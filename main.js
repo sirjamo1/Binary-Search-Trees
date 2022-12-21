@@ -253,25 +253,56 @@ class Tree {
         ));
     }
 }
+const createRandomNumberArray = (numberOfNodes, min, max) => {
+    let nodes = numberOfNodes ? numberOfNodes : 20;
+    let minValue = min ? min : 0;
+    let maxValue = max ? max : 999;
+    if (minValue >= maxValue) {
+        maxValue = minValue + 1;
+    }
+    // console.log(max - min)
+    if (nodes > maxValue - minValue) {
+        nodes = maxValue - minValue;
+    }
+    let array = [];
+    for (let i = 0; i < nodes; i += 1) {
+        let duplicate = false;
+        let newData = Math.round(
+            Math.random() * (maxValue - minValue) + minValue
+        );
+        for (let j = 0; j < array.length; j += 1) {
+            if (newData === array[j]) {
+                i -= 1;
+                duplicate = true;
+            }
+        }
+        if (duplicate === false) {
+            array[i] = newData;
+        }
+    }
+    return array;
+};
+
+console.log(createRandomNumberArray(10, 0, 10));
 
 let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
 let testNode = new Tree(testArr);
-prettyPrint(testNode.root);
-testNode.insert(6);
-console.log("after addition");
-prettyPrint(testNode.root);
-testNode.deleteNode(6345);
-console.log("after delete");
-prettyPrint(testNode.root);
-//console.log(testNode.find(9));
-console.log(testNode.levelOrder());
-console.log(testNode.inOrder());
-console.log(testNode.preOrder());
-console.log(testNode.postOrder());
-console.log(testNode.height(8));
-console.log(testNode.height(4));
-console.log(testNode.minHeight());
-console.log(testNode.isBalanced());
-console.log(testNode.depth(0));
-testNode.rebalance();
-prettyPrint(testNode.root);
+// prettyPrint(testNode.root);
+// testNode.insert(6);
+// console.log("after addition");
+// prettyPrint(testNode.root);
+// testNode.deleteNode(6345);
+// console.log("after delete");
+// prettyPrint(testNode.root);
+// //console.log(testNode.find(9));
+// console.log(testNode.levelOrder());
+// console.log(testNode.inOrder());
+// console.log(testNode.preOrder());
+// console.log(testNode.postOrder());
+// console.log(testNode.height(8));
+// console.log(testNode.height(4));
+// console.log(testNode.minHeight());
+// console.log(testNode.isBalanced());
+// console.log(testNode.depth(0));
+// testNode.rebalance();
+// prettyPrint(testNode.root);
