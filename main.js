@@ -52,6 +52,8 @@ class Tree {
     insert(value) {
         // look for node to append to
         let nodeToAppendTo = this.searchForNode(this.root, value);
+        // if result is not an object return message
+        if(typeof nodeToAppendTo !== "object") return console.log(nodeToAppendTo)
         // append new node to left/right depending on values
         if (nodeToAppendTo.data > value)
             return (nodeToAppendTo.left = new Node(value));
@@ -65,7 +67,7 @@ class Tree {
     }
     searchForNode(root, key) {
         // if key already exists console.log message
-        if (root.data === key) return console.log(`${key} already exists`);
+        if (root.data === key) return `${key} already exists`;
         // if the node value is smaller then key and it's right is empty or node value is larger and it's left is empty return that node
         if (
             (root.data < key && root.right === null) ||
