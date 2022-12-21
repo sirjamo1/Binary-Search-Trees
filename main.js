@@ -35,12 +35,6 @@ class Tree {
             0,
             duplicateFreeArr.length - 1
         );
-
-        this.inOrderArray = [];
-        this.preOrderArray = [];
-        this.postOrderArray = [];
-        //console.logs the (readable) result
-        // prettyPrint(this.root);
     }
     buildTree(arr, start, end) {
         //if start > end return null (works way back up the call stack)
@@ -165,53 +159,54 @@ class Tree {
         // when finished return array
         return breadthFirstArr;
     }
-    inOrder(root = this.root) {
+    inOrder(root = this.root, inOrderArray = []) {
         if (!root) return;
         //left node has value, run it through
         if (root.left) {
-            this.inOrder(root.left);
+            this.inOrder(root.left, inOrderArray);
         }
         // push node value to array
         if (root.data) {
-            this.inOrderArray.push(root.data);
+            inOrderArray.push(root.data);
         }
         // right node has value, run it through
         if (root.right) {
-            this.inOrder(root.right);
+            this.inOrder(root.right, inOrderArray);
         }
-        return this.inOrderArray;
+        return inOrderArray;
     }
-    preOrder(root = this.root) {
+    preOrder(root = this.root, preOrderArray = []) {
         if (!root) return;
+        
         // push node value to array
         if (root.data) {
-            this.preOrderArray.push(root.data);
+            preOrderArray.push(root.data);
         }
         // left node has value, run it through
         if (root.left) {
-            this.preOrder(root.left);
+            this.preOrder(root.left, preOrderArray);
         }
         // right node has value, run it through
         if (root.right) {
-            this.preOrder(root.right);
+            this.preOrder(root.right, preOrderArray);
         }
-        return this.preOrderArray;
+        return preOrderArray;
     }
-    postOrder(root = this.root) {
+    postOrder(root = this.root, postOrderArray = []) {
         if (!root) return;
         // right node has value, run it through
         if (root.right) {
-            this.postOrder(root.right);
+            this.postOrder(root.right, postOrderArray);
         }
         // push node value to array
         if (root.data) {
-            this.postOrderArray.push(root.data);
+            postOrderArray.push(root.data);
         }
         // left node has value run it through
         if (root.left) {
-            this.postOrder(root.left);
+            this.postOrder(root.left, postOrderArray);
         }
-        return this.postOrderArray;
+        return postOrderArray;
     }
     height(input = this.root) {
         // if input is a number find it's node else use input (node)
@@ -260,7 +255,6 @@ const createRandomNumberArray = (numberOfNodes, min, max) => {
     if (minValue >= maxValue) {
         maxValue = minValue + 1;
     }
-    // console.log(max - min)
     if (nodes > maxValue - minValue) {
         nodes = maxValue - minValue;
     }
@@ -283,10 +277,18 @@ const createRandomNumberArray = (numberOfNodes, min, max) => {
     return array;
 };
 
-console.log(createRandomNumberArray(10, 0, 10));
+//console.log(createRandomNumberArray(10, 0, 10));
 
-let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
-let testNode = new Tree(testArr);
+// let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
+// let testNode = new Tree(testArr);
+let testNode = new Tree(createRandomNumberArray(10, 0, 200))
+prettyPrint(testNode.root)
+console.log(testNode.isBalanced())
+console.log(testNode.levelOrder());
+console.log(testNode.inOrder())
+console.log(testNode.preOrder());
+console.log(testNode.postOrder());
+testNode.insert(188)
 // prettyPrint(testNode.root);
 // testNode.insert(6);
 // console.log("after addition");
@@ -296,7 +298,8 @@ let testNode = new Tree(testArr);
 // prettyPrint(testNode.root);
 // //console.log(testNode.find(9));
 // console.log(testNode.levelOrder());
-// console.log(testNode.inOrder());
+
+console.log(testNode.inOrder());
 // console.log(testNode.preOrder());
 // console.log(testNode.postOrder());
 // console.log(testNode.height(8));
