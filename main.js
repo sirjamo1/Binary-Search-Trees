@@ -243,7 +243,6 @@ class Tree {
     rebalance() {
         // order tree into ascending array, rebuild tree
         let orderedArray = this.inOrder();
-        console.log(orderedArray)
         return (this.root = this.buildTree(
             orderedArray,
             0,
@@ -280,43 +279,39 @@ const createRandomNumberArray = (numberOfNodes, min, max) => {
     return array;
 };
 
-//console.log(createRandomNumberArray(10, 0, 10));
-
-// let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
-// let testNode = new Tree(testArr);
 let testNode = new Tree(createRandomNumberArray(10, 0, 200))
-console.log(testNode.isBalanced())
-console.log(testNode.levelOrder());
-console.log(testNode.inOrder())
-console.log(testNode.preOrder());
-console.log(testNode.postOrder());
+console.log(testNode.isBalanced())          //  true
+console.log(testNode.levelOrder());         //  (10) [80, 28, 110, 15, 38, 85, 133, 64, 105, 192]
+console.log(testNode.inOrder())             //  (10) [15, 28, 38, 64, 80, 85, 105, 110, 133, 192]
+console.log(testNode.preOrder());           //  (10) [80, 28, 15, 38, 64, 110, 85, 105, 133, 192]
+console.log(testNode.postOrder());          //  (10) [192, 133, 110, 105, 85, 80, 64, 38, 28, 15]
 testNode.insert(188)
-// testNode.insert(199);
-// testNode.insert(187);
-console.log(testNode.isBalanced())
+testNode.insert(199); 
+testNode.insert(187);
+console.log(testNode.isBalanced())          //  false
 testNode.rebalance()
-console.log(testNode.isBalanced())
-console.log(testNode.levelOrder());
-console.log(testNode.inOrder());
-console.log(testNode.preOrder());
-console.log(testNode.postOrder());
-// prettyPrint(testNode.root);
-// testNode.insert(6);
-// console.log("after addition");
-// prettyPrint(testNode.root);
+console.log(testNode.isBalanced())          //  true
+console.log(testNode.levelOrder());         //  (13) [105, 38, 187, 15, 80, 110, 192, 28, 64, 85, 133, 188, 199]
+console.log(testNode.inOrder());            //  (13) [15, 28, 38, 64, 80, 85, 105, 110, 133, 187, 188, 192, 199]
+console.log(testNode.preOrder());           //  (13) [105, 38, 15, 28, 80, 64, 85, 187, 110, 133, 192, 188, 199]
+console.log(testNode.postOrder());          //  (13) [199, 192, 188, 187, 133, 110, 105, 85, 80, 64, 38, 28, 15]
+prettyPrint(testNode.root);                 
+//             ┌── 199
+// │       ┌── 192
+// │       │   └── 188
+// │   ┌── 187
+// │   │   │   ┌── 133
+// │   │   └── 110
+// └── 105
+//     │       ┌── 85
+//     │   ┌── 80
+//     │   │   └── 64
+//     └── 38
+//         │   ┌── 28
+//         └── 15
 // testNode.deleteNode(6345);
-// console.log("after delete");
-// prettyPrint(testNode.root);
-// //console.log(testNode.find(9));
-// console.log(testNode.levelOrder());
-
-console.log(testNode.inOrder());
-// console.log(testNode.preOrder());
-// console.log(testNode.postOrder());
+// console.log(testNode.find(9));
 // console.log(testNode.height(8));
-// console.log(testNode.height(4));
 // console.log(testNode.minHeight());
-// console.log(testNode.isBalanced());
 // console.log(testNode.depth(0));
-// testNode.rebalance();
-// prettyPrint(testNode.root);
+
