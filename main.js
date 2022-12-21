@@ -240,10 +240,11 @@ class Tree {
     }
     rebalance() {
         // order tree into ascending array, rebuild tree
-        let orderedArray = this.inOrderArray;
+        let orderedArray = this.inOrder();
+        console.log(orderedArray)
         return (this.root = this.buildTree(
             orderedArray,
-            orderedArray[0],
+            0,
             orderedArray.length - 1
         ));
     }
@@ -282,13 +283,21 @@ const createRandomNumberArray = (numberOfNodes, min, max) => {
 // let testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 8888];
 // let testNode = new Tree(testArr);
 let testNode = new Tree(createRandomNumberArray(10, 0, 200))
-prettyPrint(testNode.root)
 console.log(testNode.isBalanced())
 console.log(testNode.levelOrder());
 console.log(testNode.inOrder())
 console.log(testNode.preOrder());
 console.log(testNode.postOrder());
 testNode.insert(188)
+// testNode.insert(199);
+// testNode.insert(187);
+console.log(testNode.isBalanced())
+testNode.rebalance()
+console.log(testNode.isBalanced())
+console.log(testNode.levelOrder());
+console.log(testNode.inOrder());
+console.log(testNode.preOrder());
+console.log(testNode.postOrder());
 // prettyPrint(testNode.root);
 // testNode.insert(6);
 // console.log("after addition");
